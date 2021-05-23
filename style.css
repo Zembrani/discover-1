@@ -61,6 +61,24 @@ a:hover {
     color: #3dd705;
 }
 
+button {
+    width: 100%;
+    height: 50px;
+
+    border: none;
+    color: white;
+    background: #34b306;
+
+    padding: 0;
+    border-radius: 0.25rem;
+    /* para o cursos ficar a 'mao apontando' */
+    cursor: pointer;
+}
+
+button:hover {
+    background: #3dd705;
+}
+
 .button.new {
     /*inline faz com que o link esteja apenas sobre o texto, porém não aplica a margin;
     block aplica a margin, mas o link cobre a linha inteira;
@@ -69,15 +87,27 @@ a:hover {
     margin-bottom: .8rem;
 }
 
+.button.cancel {
+    color: rgb(173, 8, 8);
+    border: 2px rgb(173, 8, 8) solid;
+    border-radius: .25rem;
+    height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.6;
+}
+
+.button.cancel:hover {
+    opacity: 1;
+}
+
 /* Header */
 header {
     background: var(--green-dark);
     padding: 2rem 0 10rem;
     text-align: center;
-}
-
-header h1 {
-
 }
 
 #logo {
@@ -125,15 +155,18 @@ header h1 {
 }
 
 /* Table */
+#transaction {
+    display: block;
+    width: 100%;
+    /* Define um scroll lateral */
+    overflow: auto;
+}
+
 
 #data-table {
-    display: block;
     width: 100%;
     border-spacing: 0 0.5rem;
     color: #969cb3;
-
-    /* Define um scroll lateral */
-    overflow: auto;
 }
 
 table thead tr th:first-child, table tbody tr td:first-child {
@@ -176,6 +209,73 @@ td.income {
 td.date {
     color: #e92929
 }
+
+/* Modal */
+
+.modal-overlay {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    opacity: 0;
+    visibility: hidden;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 1;
+}
+
+.modal {
+    background: #F0F2f5;
+    padding: 2.4rem;
+    position: relative;
+    width: 90%;
+    max-width: 500px;
+
+}
+
+/* Form */
+
+form {
+    max-width: 500px;
+}
+
+#form h2 {
+    margin-top: 0;
+}
+
+input {
+    border: none;
+    border-radius: 0.2rem;
+    padding: 0.8rem;
+    width: 100%;
+}
+
+.input-group {
+    margin-top: 0.8rem;
+}
+
+.input-group small {
+    opacity: 0.4;
+}
+
+.input-group.actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.input-group.actions .button, .input-group.actions button {
+    width: 48%;
+}
+
 
 /* Footer */
 
