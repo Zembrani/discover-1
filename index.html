@@ -7,7 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jobs Finances</title>
     <link rel="stylesheet" href="./style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,400;0,700;1,100;1,400;1,700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,400;0,700;1,100;1,400;1,700&display=swap"
+        rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com">
 </head>
 
@@ -44,9 +46,7 @@
         <section id="transaction">
             <h2 class="sr-only">Transações</h2>
 
-            <a href="#" 
-            onClick="Modal.open()"
-            class="button new">+ Nova Transação</a>
+            <a href="#" onClick="Modal.open()" class="button new">+ Nova Transação</a>
 
             <table id="data-table">
                 <thead>
@@ -57,31 +57,7 @@
                         <th></th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td class="description">Luz</td>
-                        <td class="income">- R$ 500,00</td>
-                        <td class="date">23/01/2021</td>
-                        <td>
-                            <img src="./assets/minus.svg" alt="Imagem de remover dividendo">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="description">Criação website</td>
-                        <td class="income">R$ 5000,00</td>
-                        <td class="date">23/01/2021</td>
-                        <td>
-                            <img src="./assets/minus.svg" alt="Imagem de remover dividendo">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="description">Internet</td>
-                        <td class="income">- R$ 200,00</td>
-                        <td class="date">23/01/2021</td>
-                        <td>
-                            <img src="./assets/minus.svg" alt="Imagem de remover dividendo">
-                        </td>
-                    </tr>
+                <tbody id="table-transactions">
                 </tbody>
             </table>
         </section>
@@ -89,51 +65,29 @@
 
     <div id="modal-overlay" class="modal-overlay">
         <div class="modal">
-                <div class="form">
-            <h2>Nova transação</h2>
+            <div class="form">
+                <h2>Nova transação</h2>
                 <form action="">
                     <div class="input-group">
-                        <label class="sr-only"
-                            for="description">Descrição
+                        <label class="sr-only" for="description">Descrição
                         </label>
-                        <input 
-                        type="text"
-                        id="description"
-                        name="description"
-                        placeholder="Descrição"
-                        />
+                        <input type="text" id="description" name="description" placeholder="Descrição" />
                     </div>
                     <div class="input-group">
-                        <label class="sr-only"
-                            for="amount">Valor
+                        <label class="sr-only" for="amount">Valor
                         </label>
-                        <input 
-                        type="number"
-                        step="0.01"
-                        id="amount"
-                        name="amount"
-                        placeholder="0,00"
-                        />
-                        <small class="help">Use o sinal - {negativo} para despesas e , {vírgula}para casas decimais.</small>
+                        <input type="number" step="0.01" id="amount" name="amount" placeholder="0,00" />
+                        <small class="help">Use o sinal - {negativo} para despesas e , {vírgula}para casas
+                            decimais.</small>
                     </div>
                     <div class="input-group">
-                        <label class="sr-only"
-                            for="data">Data
+                        <label class="sr-only" for="data">Data
                         </label>
-                        <input 
-                        type="date"
-                        step="0.01"
-                        id="data"
-                        name="data"
-                        placeholder="01/01/2021"
-                        />
+                        <input type="date" step="0.01" id="data" name="data" placeholder="01/01/2021" />
                     </div>
 
                     <div class="input-group actions">
-                        <a href="#"
-                        class="button cancel"
-                        onclick="Modal.close()"
-                        >Cancelar</a>
+                        <a href="#" class="button cancel" onclick="Modal.close()">Cancelar</a>
                         <button>Salvar</button>
                     </div>
                 </form>
@@ -141,18 +95,11 @@
         </div>
     </div>
 
-    <footer><p>Jobs Finances</p></footer>
+    <footer>
+        <p>Jobs Finances</p>
+    </footer>
 
-    <script>
-        const Modal = {
-            open() {
-                document.getElementById('modal-overlay').classList.add('active');
-            },
-            close() {
-                document.getElementById('modal-overlay').classList.remove('active');
-            }
-        }
-    </script>
+    <script src="./scripts.js"></script>
 </body>
 
 </html>
