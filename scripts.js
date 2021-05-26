@@ -63,6 +63,13 @@ const Transaction = {
 }
 
 const Utils = {
+    formatAmount(amount) {
+        return Number(amount) * 100;
+    },
+    formatDate(date) {
+        const splittedDate = date.split("-");
+        return `${splittedDate[2]}/${splittedDate[1]}/${splittedDate[0]}`;
+    },
     formatCurrency(value) {
         const signal = Number(value) < 0 ? "-" : "";
 
@@ -113,12 +120,64 @@ const DOM = {
 }
 
 const Form = {
+    description: document.getElementById("description"),
+    amount: document.getElementById("amount"),
+    date: document.getElementById("date"),
+
+    getValues() {
+        return {
+            description: Form.description.value,
+            amount: Form.amount.value,
+            date: Form.date.value
+        }
+    },
+    // Verifica se algum campo está vazio
+    validadeFields() {
+        const arrayOfData = Object.values(Form.getValues());
+        const valuesLength = arrayOfData.filter(id => id).length;
+        if(valuesLength < arrayOfData.length) {
+            // throw new Error("Por favor, preencha todos os campos.");
+            // alert("Por favor, preencha todos os campos.");
+        }
+    },
+    formatValues() {
+        let { description, amount, date } = Form.getValues();
+
+        amount = Utils.formatAmount(amount);
+        date = Utils.formatDate(date);
+
+        return {
+            description,
+            amount,
+            date
+        }
+    },
+    saveTransaction(transaction) {
+        Transaction.add(transaction);
+    },
+    clearFields() {
+        Form.description.value = "";
+        Form.amount.value = "";
+        Form.date.value = "";
+    },
     submit(event) {
         event.preventDefault();
-        // Verificar se todas as informações foram preenchidas
-        // Formatar os dados para salvar;
-        // salvar;
-        // Apagar os dados do formulário;
+
+        try {
+            // Verificar se todas as informações foram preenchidas
+            Form.validadeFields();
+            // Formatar os dados para salvar;
+            const transaction = Form.formatValues();
+            // salvar;
+            Form.saveTransaction(transaction);
+            // Atualizar a aplicação
+            // Apagar os dados do formulário;
+            Form.clearFields();
+            //  fechar modal
+            Modal.close();
+        } catch (error) {
+            
+        }
     }    
 }
 
