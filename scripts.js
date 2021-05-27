@@ -8,29 +8,17 @@ const Modal = {
     }
 }
 
-const transactions = [
-    {
-        id: 1,
-        description: 'Luz',
-        amount: -50000,
-        date: '23/01/2021'
+const Storage = {
+    get() {
+        return JSON.parse(localStorage.getItem("dev.finances:transactions"))  || [];
     },
-    {
-        id: 2,
-        description: 'Criação website',
-        amount: 500000,
-        date: '23/01/2021'
-    },
-    {
-        id: 3,
-        description: 'Internet',
-        amount: -20000,
-        date: '23/01/2021'
+    set(transactions) {
+        localStorage.setItem("dev.finances:transactions", JSON.stringify(transactions));
     }
-]
+}
 
 const Transaction = {
-    all: transactions,
+    all: Storage.get(),
     add(transaction) {
         Transaction.all.push(transaction);
         App.reload();
@@ -43,21 +31,24 @@ const Transaction = {
     },
     incomes() {
         let incomes = 0;
-        transactions.forEach(({amount}) => {
-            if(amount > 0) incomes += amount;
+        Transaction.all.forEach(({amount}) => {
+            if(amount > 0) {
+                incomes += amount;
+            }
         })
+
         return incomes;
     },
     expenses() {
         let expenses = 0;
-        transactions.forEach(({amount}) => {
+        Transaction.all.forEach(({amount}) => {
             if(amount < 0) expenses += amount;
         })
         return expenses;
     },
     total() {
         let total = 0;
-        transactions.forEach(({amount}) => { total += amount; })
+        Transaction.all.forEach(({amount}) => { total += amount; })
         return total;
     }
 }
@@ -95,7 +86,7 @@ const DOM = {
 
         DOM.transactionContainer.appendChild(tr)
     },
-    innerHTMLTransaction({amount, date, description}) {
+    innerHTMLTransaction({amount, date, description, id}) {
         const CSSclass = amount > 0 ? "income" : "expense"
 
         amount = Utils.formatCurrency(amount)
@@ -105,7 +96,7 @@ const DOM = {
             <td class="${CSSclass}">${amount}</td>
             <td class="date">${date}</td>
             <td>
-                <img src="./assets/minus.svg" alt="Imagem de remover dividendo">
+                <img onClick="Transaction.remove(${id})" src="./assets/minus.svg" alt="Imagem de remover dividendo">
             </td>
         `;
     },
@@ -184,9 +175,9 @@ const Form = {
 const App = {
     init() {
         
-        Transaction.all.forEach( transaction => (DOM.addTransaction(transaction)));
+        Transaction.all.forEach( DOM.addTransaction);
+        Storage.set(Transaction.all);
         DOM.updateBalance();
-
     },
     reload() {
         DOM.clearTransactions();
@@ -195,3 +186,24 @@ const App = {
 }
 
 App.init();
+
+// [
+//     {
+//         id: 1,
+//         description: 'Luz',
+//         amount: -50000,
+//         date: '23/01/2021'
+//     },
+//     {
+//         id: 2,
+//         description: 'Criação website',
+//         amount: 500000,
+//         date: '23/01/2021'
+//     },
+//     {
+//         id: 3,
+//         description: 'Internet',
+//         amount: -20000,
+//         date: '23/01/2021'
+//     }
+// ]
