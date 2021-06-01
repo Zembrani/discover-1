@@ -14,6 +14,11 @@ const Storage = {
     },
     set(transactions) {
         localStorage.setItem("dev.finances:transactions", JSON.stringify(transactions));
+    },
+    getLastId() {
+        const transactions = Storage.get() || [];
+
+        return transactions && transactions[transactions.length -1]?.id + 1 || 1;
     }
 }
 
@@ -55,7 +60,8 @@ const Transaction = {
 
 const Utils = {
     formatAmount(amount) {
-        return Number(amount) * 100;
+        amount = amount * 100;
+        return Math.round(amount);
     },
     formatDate(date) {
         const splittedDate = date.split("-");
@@ -82,13 +88,16 @@ const DOM = {
 
     addTransaction(transaction) {
         const tr = document.createElement('tr');
-        tr.innerHTML = DOM.innerHTMLTransaction(transaction)
+        let id = transaction.id || 1
+
+        tr.innerHTML = DOM.innerHTMLTransaction(transaction, id)
 
         DOM.transactionContainer.appendChild(tr)
     },
-    innerHTMLTransaction({amount, date, description, id}) {
+    innerHTMLTransaction({amount, date, description, id}, newId) {
         const CSSclass = amount > 0 ? "income" : "expense"
 
+        id = id || newId;
         amount = Utils.formatCurrency(amount)
 
         return `
@@ -132,8 +141,7 @@ const Form = {
         }
     },
     formatValues() {
-        let { description, amount, date } = Form.getValues();
-
+        let {description, amount, date } = Form.getValues();
         amount = Utils.formatAmount(amount);
         date = Utils.formatDate(date);
 
@@ -160,7 +168,8 @@ const Form = {
             // Formatar os dados para salvar;
             const transaction = Form.formatValues();
             // salvar;
-            Form.saveTransaction(transaction);
+            const id = Storage.getLastId();
+            Form.saveTransaction(Object.assign(transaction, { id }));
             // Atualizar a aplicação
             // Apagar os dados do formulário;
             Form.clearFields();
@@ -186,24 +195,3 @@ const App = {
 }
 
 App.init();
-
-// [
-//     {
-//         id: 1,
-//         description: 'Luz',
-//         amount: -50000,
-//         date: '23/01/2021'
-//     },
-//     {
-//         id: 2,
-//         description: 'Criação website',
-//         amount: 500000,
-//         date: '23/01/2021'
-//     },
-//     {
-//         id: 3,
-//         description: 'Internet',
-//         amount: -20000,
-//         date: '23/01/2021'
-//     }
-// ]
